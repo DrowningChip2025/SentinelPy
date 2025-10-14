@@ -77,7 +77,7 @@ alert_cooldown_seconds = 1800
 ## Instalação
 
 ```bash
-git clone https://github.com/<seu-usuario>/SentinelPy.git
+git clone https://github.com/pedrorichil/SentinelPy.git
 cd SentinelPy
 pip install -r requirements.txt
 sudo systemctl enable sentinel.service
