@@ -1,0 +1,13 @@
+[Unit]
+Description=SentinelPy Linux Security Agent
+After=network.target
+
+[Service]
+Type=simple
+User=root 
+WorkingDirectory=/caminho/completo/para/o/diretorio/sentinelpy
+ExecStart=/usr/bin/python3 /home/zekry/sentinelpy/agent.py
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

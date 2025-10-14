@@ -1,0 +1,5 @@
+psutil 
+watchdog 
+python-telegram-bot 
+requests jinja2 
+weasyprint

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Relatório de Segurança - SentinelPy</title>
+    <style>
+        body { font-family: sans-serif; color: #333; }
+        h1, h2 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 5px; }
+        .container { width: 90%; margin: auto; }
+        .summary-box { background-color: #ecf0f1; border: 1px solid #bdc3c7; padding: 15px; margin-bottom: 20px; border-radius: 5px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #3498db; color: white; }
+        tr:nth-child(even) { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Relatório de Segurança - SentinelPy</h1>
+        <div class="summary-box">
+            <p><strong>Período do Relatório:</strong> de {{ start_date }} até {{ end_date }}</p>
+            <p><strong>Total de Eventos Detectados:</strong> {{ total_events }}</p>
+        </div>
+
+        <h2>Resumo por Severidade</h2>
+        <table>
+            <tr><th>Severidade</th><th>Contagem</th></tr>
+            {% for severity, count in events_by_severity %}
+            <tr><td>{{ severity }}</td><td>{{ count }}</td></tr>
+            {% endfor %}
+        </table>
+
+        <h2>Resumo por Tipo de Evento</h2>
+        <table>
+            <tr><th>Tipo de Evento</th><th>Contagem</th></tr>
+            {% for type, count in events_by_type %}
+            <tr><td>{{ type }}</td><td>{{ count }}</td></tr>
+            {% endfor %}
+        </table>
+
+        <h2>Top 10 IPs de Origem</h2>
+        <table>
+            <tr><th>IP</th><th>Contagem</th></tr>
+            {% for ip, count in top_ips %}
+            <tr><td>{{ ip }}</td><td>{{ count }}</td></tr>
+            {% endfor %}
+        </table>
+
+        <h2>Últimos Eventos Registrados</h2>
+        <table>
+            <tr><th>Timestamp</th><th>Tipo</th><th>Severidade</th><th>Detalhes</th><th>IP</th></tr>
+            {% for event in recent_events %}
+            <tr>
+                <td>{{ event.timestamp.split('.')[0] }}</td>
+                <td>{{ event.type }}</td>
+                <td>{{ event.severity }}</td>
+                <td>{{ event.details }}</td>
+                <td>{{ event.ip or 'N/A' }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>
