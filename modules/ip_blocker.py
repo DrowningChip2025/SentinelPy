@@ -1,4 +1,3 @@
-# modules/ip_blocker.py
 import subprocess
 import logging
 import threading
@@ -57,7 +56,7 @@ class IPBlocker(threading.Thread):
             
         except FileNotFoundError:
             logging.error("Comando 'iptables' não encontrado. O bloqueio de IP não funcionará.")
-            self.enabled = False # Desativa para evitar erros futuros
+            self.enabled = False 
         except subprocess.CalledProcessError as e:
             logging.error(f"Falha ao bloquear o IP {ip_address} com iptables: {e.stderr}")
 

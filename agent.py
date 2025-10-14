@@ -1,4 +1,3 @@
-# agent.py
 import sys
 import os
 import time
@@ -8,7 +7,6 @@ import logging
 from typing import List, Type
 import threading
 
-# Importação dos módulos do agente
 from modules.alerter import Alerter
 from modules.database import DatabaseManager
 from modules.ip_blocker import IPBlocker
@@ -27,11 +25,9 @@ class Agent:
         self.running = True
         self.modules: List[threading.Thread] = []
         
-        # Configura a captura de sinais UNIX para um desligamento limpo
         signal.signal(signal.SIGINT, self.shutdown_handler)
         signal.signal(signal.SIGTERM, self.shutdown_handler)
 
-        # Carrega a configuração e prepara o ambiente
         self.config = self._load_config()
         self._setup_logging()
         self._setup_directories()
@@ -50,7 +46,7 @@ class Agent:
             level=logging.INFO,
             format='%(asctime)s - %(threadName)s - %(levelname)s - %(message)s'
         )
-        logging.getLogger().addHandler(logging.StreamHandler(sys.stdout)) # Log para console também
+        logging.getLogger().addHandler(logging.StreamHandler(sys.stdout)) 
 
     def _setup_directories(self):
         """Garante que todos os diretórios necessários existam."""
@@ -67,11 +63,9 @@ class Agent:
         """Inicia todos os módulos e começa o loop de supervisão."""
         logging.info("🚀 Iniciando o agente SentinelPy...")
 
-        # 1. Inicializa componentes principais (não são threads)
         alerter = Alerter(self.config)
         db_manager = DatabaseManager(self.config['main']['db_file'])
 
-        # 2. Define a lista de módulos (threads) a serem executados
         module_classes: List[Type[threading.Thread]] = [
             IPBlocker,
             LogMonitor,
@@ -79,12 +73,9 @@ class Agent:
             NetworkMonitor,
             Reporter
         ]
-        
-        # 3. Instancia e prepara os módulos com suas dependências
-        # O IPBlocker é especial, pois é dependência de outros
+
         ip_blocker_instance = IPBlocker(self.config, db_manager, alerter)
 
-        # Mapeamento de dependências para cada módulo
         dependencies = {
             IPBlocker: (self.config, db_manager, alerter),
             LogMonitor: (self.config, alerter, ip_blocker_instance, db_manager),
@@ -94,13 +85,11 @@ class Agent:
         }
 
         self.modules.append(ip_blocker_instance)
-        # Instancia os outros módulos
         for module_cls in module_classes:
             if module_cls != IPBlocker:
                 instance = module_cls(*dependencies[module_cls])
                 self.modules.append(instance)
 
-        # 4. Inicia todas as threads
         for module in self.modules:
             module.name = module.__class__.__name__
             module.start()
@@ -108,7 +97,6 @@ class Agent:
 
         alerter.send_alert("Agente SentinelPy iniciado com sucesso.", "INFO")
 
-        # 5. Loop de supervisão principal
         self._supervisor_loop()
 
     def _supervisor_loop(self):
@@ -117,10 +105,8 @@ class Agent:
             for module in self.modules:
                 if not module.is_alive():
                     logging.critical(f"MÓDULO CRÍTICO CAIU: {module.getName()}!")
-                    # A lógica de reinicialização pode ser complexa e será adicionada no futuro.
-                    # Por enquanto, o agente será encerrado para evitar um estado inconsistente.
                     self.shutdown_handler(signal.SIGABRT, None)
-            time.sleep(30) # Verifica a saúde a cada 30 segundos
+            time.sleep(30) 
 
     def shutdown_handler(self, signum, frame):
         """Lida com sinais de encerramento (SIGINT, SIGTERM) de forma ordenada."""
@@ -130,12 +116,10 @@ class Agent:
         logging.warning(f"Sinal de desligamento recebido ({signal.Signals(signum).name}). Encerrando módulos...")
         self.running = False
 
-        # 1. Sinaliza para todas as threads pararem
         for module in self.modules:
             if hasattr(module, 'stop'):
                 module.stop()
 
-        # 2. Aguarda a finalização de cada thread com um timeout
         for module in self.modules:
             module.join(timeout=10)
             if module.is_alive():

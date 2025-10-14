@@ -1,4 +1,3 @@
-# modules/reporter.py
 import threading
 import time
 import logging
@@ -7,8 +6,6 @@ from collections import Counter
 from jinja2 import Environment, FileSystemLoader
 from weasyprint import HTML
 
-# Nota: WeasyPrint pode exigir a instalação de dependências de sistema.
-# Ex: sudo apt-get install libpango-1.0-0 libcairo2 libgdk-pixbuf2.0-0
 
 class Reporter(threading.Thread):
     """Gera relatórios periódicos em PDF com estatísticas e um resumo executivo."""
@@ -25,13 +22,13 @@ class Reporter(threading.Thread):
             self.template = self.env.get_template('report_template.html')
         except Exception as e:
             logging.critical(f"Falha ao carregar template de relatório: {e}. O módulo Reporter não funcionará.")
-            self.running = False # Impede a thread de iniciar se o template não for encontrado
+            self.running = False 
 
     def run(self):
         if not self.running:
             return
         logging.info(f"Reporter iniciado. Próximo relatório em {self.interval / 3600} horas.")
-        time.sleep(self.interval) # Espera o primeiro intervalo antes de gerar o relatório
+        time.sleep(self.interval) 
         while self.running:
             self.generate_report()
             time.sleep(self.interval)
@@ -47,14 +44,12 @@ class Reporter(threading.Thread):
                 logging.info("Nenhum evento de segurança a ser reportado neste período.")
                 return
 
-            # Análise de dados
             total_events = len(events)
             events_by_type = Counter(event[2] for event in events)
             events_by_severity = Counter(event[3] for event in events)
             source_ips = [event[5] for event in events if event[5]]
             top_ips = Counter(source_ips).most_common(10)
 
-            # Geração do resumo em linguagem natural
             summary_text = self._generate_summary_text(
                 start_time, end_time, total_events, events_by_type, top_ips
             )

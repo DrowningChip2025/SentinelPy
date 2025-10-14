@@ -11,14 +11,12 @@ class Alerter:
     Prioriza credenciais de variáveis de ambiente para maior segurança.
     """
     def __init__(self, config):
-        # Prioriza variáveis de ambiente sobre o config.ini
         self.token = os.getenv('SENTINEL_TELEGRAM_TOKEN', config.get('alerter', 'telegram_token', fallback=''))
         self.chat_id = os.getenv('SENTINEL_CHAT_ID', config.get('alerter', 'telegram_chat_id', fallback=''))
         
         self.api_url = f"https://api.telegram.org/bot{self.token}/sendMessage"
         self.mute_duration = config.getint('alerter', 'mute_duration_seconds', fallback=300)
-        
-        # Dicionário para rastrear o timestamp do último alerta por chave
+
         self.alert_timestamps = defaultdict(float)
 
     def send_alert(self, message: str, severity: str = "MEDIUM"):

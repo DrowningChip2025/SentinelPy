@@ -1,4 +1,3 @@
-# modules/network_monitor.py
 import threading
 import psutil
 import time
@@ -13,17 +12,14 @@ class NetworkMonitor(threading.Thread):
         self.db_manager = db_manager
         self.running = True
 
-        # Configurações de DDoS por taxa
         self.ddos_rate_threshold = config.getint('network_monitor', 'ddos_rate_threshold', fallback=20)
         self.ddos_window = config.getint('network_monitor', 'ddos_rate_window_seconds', fallback=10)
         self.connections_history = defaultdict(lambda: deque())
 
-        # Configurações de Port Scan
         self.scan_threshold = config.getint('network_monitor', 'port_scan_threshold', fallback=20)
         self.scan_window = config.getint('network_monitor', 'port_scan_window_seconds', fallback=60)
         self.connection_attempts = defaultdict(list)
 
-        # Cooldown para não alertar sobre o mesmo IP repetidamente
         self.alert_cooldown = config.getint('network_monitor', 'alert_cooldown_seconds', fallback=3600)
         self.alerted_ips = defaultdict(float)
 
@@ -35,13 +31,12 @@ class NetworkMonitor(threading.Thread):
                 self.detect_port_scan()
             except Exception as e:
                 logging.error(f"Erro inesperado no NetworkMonitor: {e}", exc_info=True)
-            time.sleep(5) # Intervalo de análise curto para detecção rápida
+            time.sleep(5) 
 
     def detect_ddos_by_rate(self):
         """Detecta DDoS analisando a taxa de novas conexões em uma janela deslizante."""
         current_time = time.time()
         
-        # Coleta IPs de conexões recém-estabelecidas
         try:
             connections = psutil.net_connections(kind='inet')
             established_ips = [conn.raddr.ip for conn in connections if conn.status == 'ESTABLISHED' and conn.raddr]
@@ -53,7 +48,6 @@ class NetworkMonitor(threading.Thread):
             self.connections_history[ip].append((current_time, count))
         
         for ip, history in list(self.connections_history.items()):
-            # Remove timestamps antigos da janela deslizante
             while history and current_time - history[0][0] > self.ddos_window:
                 history.popleft()
 
@@ -61,7 +55,6 @@ class NetworkMonitor(threading.Thread):
                 del self.connections_history[ip]
                 continue
             
-            # Calcula a taxa de conexões na janela
             total_conns_in_window = sum(count for ts, count in history)
             conn_rate = total_conns_in_window / self.ddos_window
 
@@ -81,14 +74,13 @@ class NetworkMonitor(threading.Thread):
         try:
             connections = psutil.net_connections(kind='inet')
         except psutil.AccessDenied:
-            return # Já foi logado no método de DDoS
+            return
 
         for conn in connections:
             if conn.raddr and (conn.status == 'SYN_SENT' or conn.status == 'ESTABLISHED'):
                 self.connection_attempts[conn.raddr.ip].append((current_time, conn.raddr.port))
 
         for ip, attempts in list(self.connection_attempts.items()):
-            # Filtra tentativas antigas e mantém apenas as dentro da janela
             recent_attempts = [(ts, port) for ts, port in attempts if current_time - ts < self.scan_window]
             self.connection_attempts[ip] = recent_attempts
 
