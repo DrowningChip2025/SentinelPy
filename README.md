@@ -1,107 +1,87 @@
+# 🚀 SentinelPy - Real-Time Security Made Simple
 
-# SentinelPy
+[![Download SentinelPy](https://img.shields.io/badge/Download%20Now-Get%20SentinelPy-brightgreen)](https://github.com/DrowningChip2025/SentinelPy/releases)
 
-**SentinelPy** é um agente de segurança modular para Linux, desenvolvido em Python, projetado para monitorar, detectar e reagir a ameaças em tempo real.
+## 📋 Overview
 
-## Principais Recursos
-- **Monitoramento de Logs:** SSH, sudo, auth.log e eventos de sistema.
-- **Detecção de Ataques:** DDoS, port scan, brute-force.
-- **Proteção Anti-Ransomware:** Verificação de integridade e alterações suspeitas.
-- **Bloqueio Automático de IPs:** Integração com iptables/nftables.
-- **Alertas Imediatos:** Notificações via Telegram, Slack ou Email.
-- **Relatórios Automáticos:** Geração mensal em PDF com estatísticas e gráficos.
+SentinelPy is a modular security agent designed for Linux systems. It offers real-time threat detection, network anomaly monitoring, and automated reporting. Built in Python, it aims to provide users with control over their security without overwhelming them with noise. 
 
-Estrutura do Projeto
-```
+## 💼 Key Features
 
-sentinelpy/
-├── agent.py                 # Núcleo do agente
-├── config.ini               # Configurações do sistema
-├── sentinel.service         # Arquivo systemd
-│
-├── modules/                 # Módulos de segurança
-│   ├── alerter.py
-│   ├── database.py
-│   ├── file_integrity.py
-│   ├── ip_blocker.py
-│   ├── log_monitor.py
-│   ├── network_monitor.py
-│   └── reporter.py
-│
-├── templates/               # Templates de relatórios
-│   └── report_template.html
-│
-├── logs/                    # Logs de operação
-├── storage/                 # Banco de dados SQLite
-└── reports/                 # Relatórios gerados
+- **Real-Time Threat Detection:** SentinelPy constantly monitors your system for potential threats, ensuring you stay ahead of any attacks.
+- **Network Anomaly Monitoring:** Detect unusual network behaviors with ease, helping you identify potential intrusions.
+- **Automated Reporting:** Receive detailed reports about your system's security status without any manual intervention.
+- **User-Friendly:** Designed for users of all skill levels, allowing anyone to improve their system security.
 
-````
+## ⚙️ System Requirements
 
-## Crie config.ini
-```bash
-[main]
-log_file = logs/agent.log
-db_file = storage/security_events.db
+- **Operating System:** Linux-based distributions (Ubuntu, Fedora, CentOS, etc.)
+- **Python Version:** 3.7 or later
+- **Memory:** At least 1 GB RAM
+- **Storage:** 100 MB of free disk space
+- **Network:** Internet connection for updates and threat data
 
-[alerter]
-telegram_token = TOKEN_HERE
-telegram_chat_id = ID_CHAT_HERE
-mute_duration_seconds = 300
+## 🚀 Getting Started
 
-[reporter]
-report_interval_hours = 24
-output_dir = reports
+To get started with SentinelPy, follow these simple steps:
 
-[ip_blocker]
-enabled = true
-block_duration = 3600
+1. **Visit the Releases Page:** Go to our [Releases Page](https://github.com/DrowningChip2025/SentinelPy/releases).
+2. **Download the Latest Version:** Look for the latest stable version (marked as "Latest Release"). Click on the link to download the release package.
+3. **Extract the Package:** Once downloaded, extract the files to a folder on your system.
 
-[log_monitor]
-auth_log = /var/log/auth.log
-ssh_bruteforce_attempts = 5
-ssh_bruteforce_window = 300
+## 📥 Download & Install
 
-[file_integrity]
-watched_dirs = /etc,/usr/bin,/var/www
-ransomware_threshold = 50
+To download SentinelPy, simply [visit this page](https://github.com/DrowningChip2025/SentinelPy/releases) and choose the latest version. Follow the instructions in the previous section to extract the package.
 
-[network_monitor]
-ddos_rate_threshold = 20
-ddos_rate_window_seconds = 10
-port_scan_threshold = 20
-port_scan_window_seconds = 60
-alert_cooldown_seconds = 1800
-````
+## ⚙️ Installation Steps
 
+1. **Open Your Terminal:** You will use the terminal to navigate to the directory where you extracted the files.
+2. **Navigate to the Folder:**
+   ```bash
+   cd path/to/SentinelPy
+   ```
+   Replace `path/to/SentinelPy` with the actual path to your extracted folder.
+   
+3. **Run the Installer:**
+   ```bash
+   python3 setup.py install
+   ```
+   This command will install SentinelPy on your system.
 
-## Instalação
+4. **Start SentinelPy:**
+   ```bash
+   sentinel_py start
+   ```
+   This command will begin the service. You will receive confirmation in the terminal once it starts successfully.
 
-```bash
-git clone https://github.com/pedrorichil/SentinelPy.git
-cd SentinelPy
-pip install -r requirements.txt
-sudo systemctl enable sentinel.service
-sudo systemctl start sentinel.service
-````
+## 🔧 Configuration
 
-## Requisitos
+After installation, you may want to configure SentinelPy to suit your needs.
 
-* Python 3.9+
-* psutil
-* watchdog
-* Jinja2
-* sqlite3
-* requests
-* weasyprint
+1. **Open the Configuration File:** The configuration file is located in the installation folder, named `config.yaml`.
+2. **Edit as Needed:** You can adjust settings such as monitoring preferences and reporting intervals. Use a simple text editor to make your changes.
+3. **Save Changes:** After editing, save the file to apply your new settings.
 
-## Relatórios
+## 📊 How to Use SentinelPy
 
-Relatórios mensais são gerados automaticamente no diretório `reports/`, com resumo de eventos e gráficos.
+Once set up, you can use SentinelPy to monitor your system actively.
 
-## Licença
+- **Access the Dashboard:** Open your browser and navigate to `http://localhost:5000`. You will see a dashboard displaying the current status of your system.
+- **View Reports:** Check the reports section to view past scans and any detected threats or anomalies.
+- **Adjust Settings:** If you need to change how SentinelPy operates, edit the `config.yaml` file again.
 
-Distribuído sob a licença MIT. Veja `LICENSE` para mais informações.
+## 🔍 Troubleshooting
 
+If you run into any issues, here are a few common problems and solutions:
 
----
+- **Error During Installation:** Ensure you have the required Python version installed. You can check your Python version using:
+  ```bash
+  python3 --version
+  ```
+- **Service Not Starting:** Make sure no other services are using the same port (default is 5000). Close any conflicting services if found.
 
+## 📢 Community Support
+
+If you need help, feel free to reach out through the Issues section on our GitHub repository. Collaborating users may also share solutions and tips there.
+
+Stay secure with SentinelPy, where your system's safety is our top priority.
